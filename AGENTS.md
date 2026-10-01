@@ -8,3 +8,7 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+# Rules
+- Chatbot is rule-based (src/lib/chat-engine.ts), no LLM — user explicitly forbade AI APIs.
+- Chat threads live in browser localStorage at /chat/$threadId — no sign-in needed for visitors.
+- Feedback is inserted from the browser into the feedback table (anon insert only, no public reads).
