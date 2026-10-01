@@ -327,7 +327,7 @@ function Index() {
 
       <footer className="mt-16 flex flex-wrap justify-between gap-4 border-t border-border pt-8 text-sm text-muted-foreground">
         <span>{profile.name} · Application portfolio</span>
-        <span>{profile.preparedFor}</span>
+        <span>{profile.preparedFor} · <Link to="/admin" className="underline">Admin</Link></span>
       </footer>
     </main>
   );

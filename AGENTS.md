@@ -12,3 +12,4 @@
 - Chatbot is rule-based (src/lib/chat-engine.ts), no LLM — user explicitly forbade AI APIs.
 - Chat threads live in browser localStorage at /chat/$threadId — no sign-in needed for visitors.
 - Feedback is inserted from the browser into the feedback table (anon insert only, no public reads).
+- Admin access: user_roles table + has_role(); first signed-in user claims admin via claim_first_admin() RPC on /admin.
