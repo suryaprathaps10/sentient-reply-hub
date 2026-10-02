@@ -1,22 +1,37 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { approach, linkedin, profile, skills, strengths, tickerItems, work } from "@/data/cv";
+import {
+  certifications,
+  contact,
+  education,
+  interests,
+  linkedin,
+  profile,
+  projects,
+  skills,
+  strengths,
+  tickerItems,
+  work,
+} from "@/data/cv";
 import { FeedbackForm } from "@/components/FeedbackForm";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: `${profile.name} | Engineering Portfolio` },
+      { title: `${profile.name} | Portfolio` },
       {
         name: "description",
         content:
-          "Interactive engineering portfolio: workflow automation, Java, SQL, React and AI-assisted development — with a live assistant and feedback.",
+          "Portfolio of Surya Prathap Suresh — ServiceNow developer with 2 years of experience, MSc Management candidate at the University of Nottingham. Live assistant and feedback included.",
       },
-      { property: "og:title", content: `${profile.name} | Engineering Portfolio` },
+      {
+        property: "og:title",
+        content: `${profile.name} | Portfolio`,
+      },
       {
         property: "og:description",
         content:
-          "Process-first software engineering: automation case studies, projects, skills and a portfolio assistant you can ask questions.",
+          "ServiceNow development, consultancy projects, education and certifications — with a live assistant you can ask questions.",
       },
       { property: "og:type", content: "profile" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -76,7 +91,7 @@ function LiveClock() {
   return (
     <span className="inline-flex items-center gap-2 text-xs text-ink-muted">
       <span className="h-2 w-2 rounded-full bg-accent" style={{ animation: "pulse-dot 1.6s infinite" }} />
-      Available for engineering work {now ? `· ${now}` : ""}
+      Available for work {now ? `· ${now}` : ""}
     </span>
   );
 }
@@ -91,10 +106,13 @@ function Index() {
         </span>
         <div className="flex items-center gap-5 text-muted-foreground">
           <a href="#work" className="transition hover:text-foreground">
-            Work
+            Experience
           </a>
-          <a href="#approach" className="transition hover:text-foreground">
-            Approach
+          <a href="#projects" className="transition hover:text-foreground">
+            Projects
+          </a>
+          <a href="#education" className="transition hover:text-foreground">
+            Education
           </a>
           <a href="#skills" className="transition hover:text-foreground">
             Skills
@@ -138,7 +156,7 @@ function Index() {
               href="#work"
               className="rounded-full border border-ink-line px-5 py-3 text-sm font-semibold transition hover:bg-white/5"
             >
-              Explore my work ↓
+              Explore my experience ↓
             </a>
             <button
               type="button"
@@ -157,9 +175,9 @@ function Index() {
           <span className="absolute inset-[15%] rounded-full border border-ink-line" />
           <span className="absolute inset-[30%] rounded-full border border-ink-line" />
           <strong className="absolute inset-0 grid place-items-center text-center font-display text-xl leading-tight">
-            Understand.
-            <br />
             Build.
+            <br />
+            Lead.
             <br />
             <span className="text-accent">Improve.</span>
           </strong>
@@ -179,16 +197,16 @@ function Index() {
       <section id="work" className="pt-20">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
           <div>
-            <div className="eyebrow text-lime-deep">01 / Selected work</div>
+            <div className="eyebrow text-lime-deep">01 / Experience</div>
             <h2 className="mt-2 text-4xl sm:text-5xl">
-              Engineering with
+              Technical depth,
               <br />
-              business outcomes.
+              business focus.
             </h2>
           </div>
           <p className="max-w-md text-muted-foreground">
-            I focus on the operational problem first: who is affected, where work gets stuck, and
-            what a better workflow should enable.
+            Two years building ServiceNow applications for the insurance and financial sectors,
+            now paired with management studies at the University of Nottingham.
           </p>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
@@ -214,7 +232,6 @@ function Index() {
                     {item.status}
                   </span>
                 )}
-                {item.note && <p className="mt-3 text-sm text-muted-foreground">{item.note}</p>}
               </article>
             </Reveal>
           ))}
@@ -223,9 +240,9 @@ function Index() {
               <span className="eyebrow text-accent">Live · Portfolio assistant</span>
               <h3 className="mt-3 text-2xl">Have a question? Ask it now.</h3>
               <p className="mt-3 max-w-2xl text-ink-muted">
-                A built-in assistant answers directly from this CV — experience, projects, skills,
-                approach and contact. Conversations are saved in your browser, so you can pick them
-                up later.
+                A built-in assistant answers directly from this resume — experience, education,
+                projects, skills and contact. Conversations are saved in your browser, so you can
+                pick them up later.
               </p>
               <Link
                 to="/chat"
@@ -238,44 +255,73 @@ function Index() {
         </div>
       </section>
 
-      <section id="approach" className="pt-20">
+      <section id="projects" className="pt-20">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
           <div>
-            <div className="eyebrow text-lime-deep">02 / How I work</div>
-            <h2 className="mt-2 text-4xl sm:text-5xl">
-              AI accelerates work.
-              <br />
-              Engineering owns it.
-            </h2>
+            <div className="eyebrow text-lime-deep">02 / Projects</div>
+            <h2 className="mt-2 text-4xl sm:text-5xl">Built end to end.</h2>
           </div>
           <p className="max-w-md text-muted-foreground">
-            I use AI coding tools as assistants, not as a substitute for understanding the code,
-            checking the output, or taking responsibility for the result.
+            Academic and self-directed projects spanning full-stack web development, cloud
+            infrastructure and blockchain security.
           </p>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
-          {approach.map((step, i) => (
-            <Reveal key={step.tag} delay={i * 70}>
+          {projects.map((project, i) => (
+            <Reveal key={project.title} delay={i * 80}>
               <article className="panel h-full p-6 transition hover:-translate-y-1 hover:shadow-float">
-                <span className="eyebrow text-lime-deep">{step.tag}</span>
-                <h3 className="mt-3 text-xl">{step.title}</h3>
-                <p className="mt-2 text-muted-foreground">{step.body}</p>
+                <span className="eyebrow text-lime-deep">{project.tag}</span>
+                <h3 className="mt-3 text-xl">{project.title}</h3>
+                <p className="mt-2 text-muted-foreground">{project.body}</p>
               </article>
             </Reveal>
           ))}
         </div>
       </section>
 
+      <section id="education" className="pt-20">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
+          <div>
+            <div className="eyebrow text-lime-deep">03 / Education &amp; certifications</div>
+            <h2 className="mt-2 text-4xl sm:text-5xl">Credentials.</h2>
+          </div>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          <Reveal>
+            <article className="panel h-full p-6">
+              <h3 className="text-xl">Education</h3>
+              <ul className="mt-4 space-y-4">
+                {education.map((item) => (
+                  <li key={item.degree} className="border-l-2 border-accent/40 pl-4">
+                    <p className="font-semibold">{item.degree}</p>
+                    <p className="text-sm text-muted-foreground">{item.school}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {item.detail} · {item.period}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </Reveal>
+          <Reveal delay={80}>
+            <article className="panel h-full p-6">
+              <h3 className="text-xl">Certifications</h3>
+              <ul className="mt-4 list-disc space-y-2 pl-5 text-muted-foreground">
+                {certifications.map((cert) => (
+                  <li key={cert}>{cert}</li>
+                ))}
+              </ul>
+            </article>
+          </Reveal>
+        </div>
+      </section>
+
       <section id="skills" className="pt-20">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
           <div>
-            <div className="eyebrow text-lime-deep">03 / Toolkit</div>
-            <h2 className="mt-2 text-4xl sm:text-5xl">Foundations &amp; focus.</h2>
+            <div className="eyebrow text-lime-deep">04 / Toolkit</div>
+            <h2 className="mt-2 text-4xl sm:text-5xl">Skills &amp; strengths.</h2>
           </div>
-          <p className="max-w-md text-muted-foreground">
-            A concise snapshot of the technologies and capabilities to substantiate with code,
-            examples and discussion.
-          </p>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           {skills.map((group, i) => (
@@ -296,6 +342,12 @@ function Index() {
               <p className="mt-2 text-muted-foreground">{strengths}</p>
             </article>
           </Reveal>
+          <Reveal delay={200}>
+            <article className="panel p-6 md:col-span-2">
+              <h3 className="text-xl">Beyond work</h3>
+              <p className="mt-2 text-muted-foreground">{interests.join(" · ")}</p>
+            </article>
+          </Reveal>
         </div>
       </section>
 
@@ -307,7 +359,7 @@ function Index() {
           className="panel group flex flex-wrap items-center justify-between gap-5 p-8 transition hover:opacity-90"
         >
           <div>
-            <div className="eyebrow text-lime-deep">04 / Recommendations</div>
+            <div className="eyebrow text-lime-deep">05 / Recommendations</div>
             <h2 className="mt-2 text-3xl sm:text-4xl">What colleagues say.</h2>
             <p className="mt-3 text-muted-foreground">
               Read my recommendations directly on my LinkedIn profile.
@@ -322,34 +374,40 @@ function Index() {
       <section id="feedback" className="grid gap-4 pt-20 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="flex flex-col justify-between rounded-3xl bg-accent p-8 text-accent-foreground sm:p-10">
           <div>
-            <div className="eyebrow text-lime-deep">05 / Let's talk</div>
+            <div className="eyebrow text-lime-deep">06 / Let's talk</div>
             <h3 className="mt-3 text-3xl leading-tight">
-              Practical problem-solving,
+              Open to roles where
               <br />
-              with a bias toward building.
+              technical and leadership
+              <br />
+              skills meet.
             </h3>
             <p className="mt-4 max-w-lg">
-              I'm interested in engineering work where understanding the business context matters as
-              much as writing the code.
+              Based in {contact.location}. Reach me at {contact.email} or {contact.phone}.
             </p>
           </div>
-          <a
-            href={profile.github}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-8 inline-flex w-fit rounded-full bg-ink px-5 py-3 text-sm font-semibold text-ink-foreground transition hover:opacity-90"
-          >
-            GitHub ↗
-          </a>
-          <a href={linkedin} target="_blank" rel="noreferrer" className="mt-3 inline-flex w-fit rounded-full border border-ink px-5 py-3 text-sm font-semibold transition hover:bg-ink hover:text-ink-foreground">
-            LinkedIn ↗
-          </a>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a
+              href={`mailto:${contact.email}`}
+              className="inline-flex w-fit rounded-full bg-ink px-5 py-3 text-sm font-semibold text-ink-foreground transition hover:opacity-90"
+            >
+              Email me ↗
+            </a>
+            <a
+              href={linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex w-fit rounded-full border border-ink px-5 py-3 text-sm font-semibold transition hover:bg-ink hover:text-ink-foreground"
+            >
+              LinkedIn ↗
+            </a>
+          </div>
         </div>
         <FeedbackForm />
       </section>
 
       <footer className="mt-16 flex flex-wrap justify-between gap-4 border-t border-border pt-8 text-sm text-muted-foreground">
-        <span>{profile.name} · Application portfolio</span>
+        <span>{profile.name} · {contact.location}</span>
         <span>{profile.preparedFor} · <Link to="/admin" className="underline">Admin</Link></span>
       </footer>
     </main>
