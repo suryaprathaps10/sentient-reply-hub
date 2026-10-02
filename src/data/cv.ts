@@ -45,8 +45,9 @@ export const work: WorkItem[] = [
       "Evaluated AI use cases to recommend a low-risk adoption strategy",
       "Presented recommendations, pilot success metrics and a go-to-market plan",
     ],
- |  status: "University of Nottingham · 2026",
+    status: "University of Nottingham · 2026",
   },
+
   {
     tag: "Part-time · November 2025 – Present",
     title: "Retail Assistant — JD",

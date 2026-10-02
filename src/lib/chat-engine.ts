@@ -1,4 +1,4 @@
-import { profile, skills, strengths, work } from "@/data/cv";
+import { certifications, contact, education, profile, projects, skills, strengths, work } from "@/data/cv";
 
 export type ChatRole = "user" | "assistant";
 
@@ -19,74 +19,84 @@ const rules: Rule[] = [
   {
     keywords: ["hello", "hi ", "hey", "good morning", "good evening"],
     answer: () =>
-      `Hi — I'm the assistant for ${profile.name}'s portfolio. Ask me about his experience, projects, skills or how he works.`,
-    suggestions: ["What has he built?", "What are his skills?", "How does he work?"],
+      `Hi — I'm the assistant for ${profile.name}'s portfolio. Ask me about his experience, education, projects, skills or how to get in touch.`,
+    suggestions: ["What's his experience?", "What are his skills?", "Where did he study?"],
   },
   {
     keywords: ["who", "about", "yourself", "introduce", "summary", "profile"],
     answer: () =>
-      `${profile.name} is a software engineer focused on workflow automation and AI-assisted development. In his words: "${profile.tagline}"`,
-    suggestions: ["Tell me about his experience", "Which technologies?"],
+      `${profile.name} is a software developer with 2 years of experience — most of it building ServiceNow applications at Right Prompt Technologies in Bengaluru. He's currently completing an MSc in Management at the University of Nottingham and looking for roles that blend technical expertise with leadership.`,
+    suggestions: ["Tell me about his experience", "What are his skills?"],
   },
   {
-    keywords: ["experience", "work", "job", "professional", "freeze", "unfreeze", "automation"],
+    keywords: ["experience", "work", "job", "professional", "servicenow", "developer", "right prompt", "career"],
     answer: () => {
-      const item = work[0]!;
-      return `**${item.title}**\n\n${item.body.join("\n\n")}`;
+      const item = work.find((w) => w.title.includes("Right Prompt"))!;
+      return `**${item.title}** — ${item.tag}\n\n${item.body.join("\n\n")}\n\n${item.bullets!.map((b) => `- ${b}`).join("\n")}`;
     },
-    suggestions: ["What projects is he building?", "What about AI work?"],
+    suggestions: ["What else has he done?", "What are his skills?"],
   },
   {
-    keywords: ["project", "framevibe", "portfolio", "built", "building", "side"],
+    keywords: ["retail", "jd", "part-time", "part time", "shop"],
+    answer: () => {
+      const item = work.find((w) => w.title.includes("Retail"))!;
+      return `**${item.title}** — ${item.tag}\n\n${item.body.join("\n\n")}`;
+    },
+    suggestions: ["What's his experience?", "Where did he study?"],
+  },
+  {
+    keywords: ["consultancy", "consulting", "applyu", "admissions", "market", "competition"],
+    answer: () => {
+      const item = work.find((w) => w.title.includes("ApplyU"))!;
+      return `**${item.title}** — ${item.tag}\n\n${item.body.join("\n\n")}\n\n${item.bullets!.map((b) => `- ${b}`).join("\n")}`;
+    },
+    suggestions: ["Tell me about his experience", "What are his skills?"],
+  },
+  {
+    keywords: ["project", "portfolio", "built", "course management", "blockchain", "cloud"],
     answer: () =>
-      work
-        .slice(1)
-        .map((item) => `**${item.title}** — ${item.body[0]}${item.status ? `\n_${item.status}_` : ""}`)
+      projects
+        .map((p) => `**${p.title}** (${p.tag}) — ${p.body}`)
         .join("\n\n"),
-    suggestions: ["What are his skills?", "How can I contact him?"],
+    suggestions: ["What are his skills?", "What's his experience?"],
   },
   {
-    keywords: ["ai", "llm", "machine learning", "gpt", "assistant", "agent"],
+    keywords: ["education", "msc", "university", "nottingham", "college", "study", "degree", "bachelor", "vidyavardhaka"],
     answer: () =>
-      "He uses AI coding tools as assistants, not replacements: exploration, implementation and iteration, with review of everything generated. His next build is an AI support-workflow assistant with structured outputs, grounded retrieval, evaluation cases and human approval before consequential actions. He is not claiming production LLM experience yet.",
-    suggestions: ["How does he work?", "What has he shipped?"],
+      education
+        .map((e) => `**${e.degree}** — ${e.school}, ${e.detail} (${e.period})`)
+        .join("\n\n"),
+    suggestions: ["Is he certified in anything?", "What are his skills?"],
   },
   {
-    keywords: ["skill", "tech", "technolog", "stack", "language", "java", "sql", "react", "node", "aws", "tool"],
+    keywords: ["certified", "certification", "csa", "cad", "csm", "credential"],
+    answer: () => `He holds three ServiceNow certifications:\n- ${certifications.join("\n- ")}`,
+    suggestions: ["What's his experience?", "What are his skills?"],
+  },
+  {
+    keywords: ["skill", "tech", "technolog", "stack", "language", "python", "sql", "javascript", "html", "css", "figma", "tool"],
     answer: () =>
       skills
         .map((group) => `**${group.title}**\n- ${group.items.join("\n- ")}`)
         .join("\n\n"),
-    suggestions: ["What are his strengths?", "Tell me about his experience"],
+    suggestions: ["Is he certified in anything?", "What are his strengths?"],
   },
   {
-    keywords: ["strength", "soft skill", "team", "coordination", "communication"],
+    keywords: ["strength", "soft skill", "team", "coordination", "communication", "leadership", "manager"],
     answer: () => strengths,
-    suggestions: ["How does he approach a problem?"],
+    suggestions: ["What kind of roles is he looking for?", "What are his skills?"],
   },
   {
-    keywords: ["approach", "how do you work", "process", "method", "how does he work"],
+    keywords: ["contact", "email", "hire", "reach", "talk", "interview", "available", "phone", "call"],
     answer: () =>
-      "Four steps: understand the real problem, decompose it into tractable components, build with AI tools used deliberately, then verify behaviour and edge cases and document what is still uncertain.",
-    suggestions: ["What about AI tools?", "What has he built?"],
-  },
-  {
-    keywords: ["contact", "email", "hire", "reach", "talk", "interview", "available"],
-    answer: () =>
-      `He's open to engineering work where business context matters as much as the code. Use the feedback form on the home page, or the GitHub link in the header (${profile.github}).`,
+      `You can reach him at ${contact.email} or ${contact.phone}. He's based in ${contact.location}. The feedback form on the home page also gets straight to him.`,
     suggestions: ["What kind of roles?", "What are his skills?"],
   },
   {
-    keywords: ["role", "looking for", "kind of work", "position"],
+    keywords: ["role", "looking for", "kind of work", "position", "why", "fit", "hobby", "interest"],
     answer: () =>
-      "Roles where he can analyse an operational process, find the friction and turn it into software: workflow automation, internal tooling, and practical AI-assisted development.",
+      "He's seeking managerial roles where he can leverage a blend of technical expertise and leadership capabilities to contribute to strategic decision-making and drive innovation. Outside work: dancing, agriculture, music — and he's a district-level Kabaddi player.",
     suggestions: ["What's his experience?", "How can I contact him?"],
-  },
-  {
-    keywords: ["clear rock", "clearrock", "why", "fit"],
-    answer: () =>
-      "This portfolio was prepared for Clear Rock AI. The fit he's making the case for: process understanding first, deliberate use of AI tooling, and honest scoping of what is built versus planned.",
-    suggestions: ["What's planned next?", "What are his skills?"],
   },
   {
     keywords: ["cv", "resume", "pdf", "download", "print"],
@@ -100,12 +110,12 @@ const rules: Rule[] = [
 ];
 
 const fallback =
-  "I can only answer from this portfolio — no external AI is used here. Try asking about his experience, projects, skills, how he works, or how to get in touch.";
+  "I can only answer from this portfolio — no external AI is used here. Try asking about his experience, education, projects, skills, certifications, or how to get in touch.";
 
 export const starterQuestions = [
-  "What has he actually built?",
+  "What's his experience?",
   "Which technologies does he use?",
-  "How does he approach a problem?",
+  "Where did he study?",
   "How can I contact him?",
 ];
 
