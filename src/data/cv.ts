@@ -122,3 +122,10 @@ export const tickerItems = [
   "AI-assisted development",
   "Process analysis",
 ];
+
+export const linkedin = "https://www.linkedin.com/in/surya-prathap-suresh-065a70253/";
+
+export type Recommendation = { quote: string; name: string; role: string };
+
+// Paste real LinkedIn recommendations here (LinkedIn doesn't allow automatic import).
+export const recommendations: Recommendation[] = [];

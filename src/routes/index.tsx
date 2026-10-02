@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { approach, profile, skills, strengths, tickerItems, work } from "@/data/cv";
+import { approach, linkedin, profile, recommendations, skills, strengths, tickerItems, work } from "@/data/cv";
 import { FeedbackForm } from "@/components/FeedbackForm";
 
 export const Route = createFileRoute("/")({
@@ -299,10 +299,41 @@ function Index() {
         </div>
       </section>
 
+      <section id="recommendations" className="pt-20">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
+          <div>
+            <div className="eyebrow text-lime-deep">04 / Recommendations</div>
+            <h2 className="mt-2 text-4xl sm:text-5xl">What colleagues say.</h2>
+          </div>
+          <a href={linkedin} target="_blank" rel="noreferrer" className="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-ink-foreground transition hover:opacity-90">
+            View on LinkedIn ↗
+          </a>
+        </div>
+        {recommendations.length > 0 ? (
+          <div className="grid gap-4 md:grid-cols-2">
+            {recommendations.map((r, i) => (
+              <Reveal key={r.name} delay={i * 70}>
+                <figure className="panel h-full p-6">
+                  <blockquote className="text-lg leading-relaxed">“{r.quote}”</blockquote>
+                  <figcaption className="mt-4 text-sm">
+                    <span className="font-semibold">{r.name}</span>
+                    <span className="text-muted-foreground"> · {r.role}</span>
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
+          </div>
+        ) : (
+          <p className="panel p-6 text-muted-foreground">
+            Read my recommendations directly on LinkedIn.
+          </p>
+        )}
+      </section>
+
       <section id="feedback" className="grid gap-4 pt-20 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="flex flex-col justify-between rounded-3xl bg-accent p-8 text-accent-foreground sm:p-10">
           <div>
-            <div className="eyebrow text-lime-deep">04 / Let's talk</div>
+            <div className="eyebrow text-lime-deep">05 / Let's talk</div>
             <h3 className="mt-3 text-3xl leading-tight">
               Practical problem-solving,
               <br />
@@ -320,6 +351,9 @@ function Index() {
             className="mt-8 inline-flex w-fit rounded-full bg-ink px-5 py-3 text-sm font-semibold text-ink-foreground transition hover:opacity-90"
           >
             GitHub ↗
+          </a>
+          <a href={linkedin} target="_blank" rel="noreferrer" className="mt-3 inline-flex w-fit rounded-full border border-ink px-5 py-3 text-sm font-semibold transition hover:bg-ink hover:text-ink-foreground">
+            LinkedIn ↗
           </a>
         </div>
         <FeedbackForm />
