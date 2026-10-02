@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { approach, linkedin, profile, recommendations, skills, strengths, tickerItems, work } from "@/data/cv";
+import { approach, linkedin, profile, skills, strengths, tickerItems, work } from "@/data/cv";
 import { FeedbackForm } from "@/components/FeedbackForm";
 
 export const Route = createFileRoute("/")({
@@ -300,34 +300,23 @@ function Index() {
       </section>
 
       <section id="recommendations" className="pt-20">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
+        <a
+          href={linkedin}
+          target="_blank"
+          rel="noreferrer"
+          className="panel group flex flex-wrap items-center justify-between gap-5 p-8 transition hover:opacity-90"
+        >
           <div>
             <div className="eyebrow text-lime-deep">04 / Recommendations</div>
-            <h2 className="mt-2 text-4xl sm:text-5xl">What colleagues say.</h2>
+            <h2 className="mt-2 text-3xl sm:text-4xl">What colleagues say.</h2>
+            <p className="mt-3 text-muted-foreground">
+              Read my recommendations directly on my LinkedIn profile.
+            </p>
           </div>
-          <a href={linkedin} target="_blank" rel="noreferrer" className="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-ink-foreground transition hover:opacity-90">
+          <span className="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-ink-foreground transition group-hover:opacity-90">
             View on LinkedIn ↗
-          </a>
-        </div>
-        {recommendations.length > 0 ? (
-          <div className="grid gap-4 md:grid-cols-2">
-            {recommendations.map((r, i) => (
-              <Reveal key={r.name} delay={i * 70}>
-                <figure className="panel h-full p-6">
-                  <blockquote className="text-lg leading-relaxed">“{r.quote}”</blockquote>
-                  <figcaption className="mt-4 text-sm">
-                    <span className="font-semibold">{r.name}</span>
-                    <span className="text-muted-foreground"> · {r.role}</span>
-                  </figcaption>
-                </figure>
-              </Reveal>
-            ))}
-          </div>
-        ) : (
-          <p className="panel p-6 text-muted-foreground">
-            Read my recommendations directly on LinkedIn.
-          </p>
-        )}
+          </span>
+        </a>
       </section>
 
       <section id="feedback" className="grid gap-4 pt-20 lg:grid-cols-[1.1fr_0.9fr]">
