@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { certifications, education, interests, profile, projects, skills, strengths, work } from "@/data/cv";
 
 export type BoxStyle = {
@@ -91,7 +92,7 @@ export const defaultContent: SiteContent = {
   ],
 };
 
-export function boxStyle(s?: BoxStyle): React.CSSProperties {
+export function boxStyle(s?: BoxStyle): CSSProperties {
   if (!s) return {};
   return {
     ...(s.bg ? { background: s.bg } : {}),
