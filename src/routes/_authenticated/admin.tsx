@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { ContentEditor } from "@/components/ContentEditor";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -26,6 +27,7 @@ function AdminPage() {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const [filters, setFilters] = useState<Filters>({ from: "", to: "", rating: "", status: "" });
+  const [tab, setTab] = useState<"feedback" | "edit">("feedback");
 
   const access = useQuery({
     queryKey: ["admin-access"],
@@ -82,7 +84,16 @@ function AdminPage() {
       </nav>
 
       <div className="eyebrow text-lime-deep">Admin</div>
-      <h1 className="mt-2 text-4xl">Feedback</h1>
+      <h1 className="mt-2 text-4xl">{tab === "edit" ? "Edit portfolio" : "Feedback"}</h1>
+      {access.data && (
+        <div className="mt-4 flex gap-2">
+          {(["feedback", "edit"] as const).map((t) => (
+            <button key={t} onClick={() => setTab(t)} className={`rounded-full px-4 py-2 text-sm font-semibold ${tab === t ? "bg-ink text-ink-foreground" : "border border-border"}`}>
+              {t === "edit" ? "Edit site" : "Feedback"}
+            </button>
+          ))}
+        </div>
+      )}
 
       {access.isLoading && <p className="mt-6 text-muted-foreground">Checking access…</p>}
       {access.data === false && (
@@ -92,7 +103,9 @@ function AdminPage() {
       )}
       {access.isError && <p className="mt-6 text-destructive">Couldn't check access.</p>}
 
-      {access.data && (
+      {access.data && tab === "edit" && <ContentEditor />}
+
+      {access.data && tab === "feedback" && (
         <>
           <div className="mt-6 grid gap-3 sm:grid-cols-3">
             <Stat label="Showing" value={String(rows.length)} />
