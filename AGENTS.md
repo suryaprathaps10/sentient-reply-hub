@@ -13,3 +13,4 @@
 - Chat threads live in browser localStorage at /chat/$threadId — no sign-in needed for visitors.
 - Feedback is inserted from the browser into the feedback table (anon insert only, no public reads).
 - Admin access: user_roles table + has_role(); first signed-in user claims admin via claim_first_admin() RPC on /admin.
+- Portfolio page content/styles live as one JSON row in site_content (public read, admin write), edited in /admin; src/lib/site-content.ts holds defaults from cv.ts — lets the owner edit without code.
