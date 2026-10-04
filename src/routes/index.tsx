@@ -232,5 +232,6 @@ function Index() {
         <span>{profile.preparedFor} · <Link to="/admin" className="underline">Admin</Link></span>
       </footer>
     </main>
+    </div>
   );
 }
