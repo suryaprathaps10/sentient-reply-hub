@@ -238,6 +238,5 @@ export function ChatWindow({ threadId }: { threadId: string }) {
           </form>
         </div>
       </section>
-    </div>
   );
 }
