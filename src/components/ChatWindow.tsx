@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { answerFor, starterQuestions, titleFor, type ChatMessage } from "@/lib/chat-engine";
 import {
   createThread,
-  deleteThread,
   loadThreads,
   newId,
   upsertThread,
@@ -43,7 +41,7 @@ function Rich({ text }: { text: string }) {
 }
 
 export function ChatWindow({ threadId }: { threadId: string }) {
-  const [threads, setThreads] = useState<Thread[]>([]);
+  const [, setThreads] = useState<Thread[]>([]);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
