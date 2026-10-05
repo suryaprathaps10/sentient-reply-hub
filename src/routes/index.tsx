@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { contact, linkedin, profile, tickerItems } from "@/data/cv";
 import { FeedbackForm } from "@/components/FeedbackForm";
 import { SiteHero, SiteSections } from "@/components/SiteSections";
+import { RoleMatcher } from "@/components/RoleMatcher";
 import { getSiteContent } from "@/lib/site-content.functions";
 
 export const Route = createFileRoute("/")({
@@ -171,6 +172,8 @@ function Index() {
           </Link>
         </article>
       </section>
+
+      <RoleMatcher />
 
       <section id="recommendations" className="pt-20">
         <a
