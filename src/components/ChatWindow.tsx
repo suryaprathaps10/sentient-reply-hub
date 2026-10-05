@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { answerFor, starterQuestions, titleFor, type ChatMessage } from "@/lib/chat-engine";
 import {
   createThread,
-  deleteThread,
   loadThreads,
   newId,
   upsertThread,
@@ -43,7 +41,7 @@ function Rich({ text }: { text: string }) {
 }
 
 export function ChatWindow({ threadId }: { threadId: string }) {
-  const [threads, setThreads] = useState<Thread[]>([]);
+  const [, setThreads] = useState<Thread[]>([]);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
@@ -136,52 +134,8 @@ export function ChatWindow({ threadId }: { threadId: string }) {
     [messages, persist, typing],
   );
 
-  const sorted = useMemo(() => [...threads].sort((a, b) => b.updatedAt - a.updatedAt), [threads]);
-
   return (
-    <div className="grid gap-6 lg:grid-cols-[260px_1fr]">
-      <aside className="panel h-fit p-4">
-        <div className="flex items-center justify-between">
-          <span className="eyebrow text-lime-deep">Your chats</span>
-          <Link
-            to="/chat"
-            className="rounded-full bg-ink px-3 py-1.5 text-xs font-semibold text-ink-foreground transition hover:opacity-90"
-          >
-            + New
-          </Link>
-        </div>
-        <ul className="mt-4 space-y-1">
-          {sorted.length === 0 && (
-            <li className="text-sm text-muted-foreground">No saved chats yet.</li>
-          )}
-          {sorted.map((thread) => (
-            <li
-              key={thread.id}
-              className={`group flex items-center gap-1 rounded-xl px-2 py-1.5 transition ${
-                thread.id === threadId ? "bg-secondary" : "hover:bg-secondary/60"
-              }`}
-            >
-              <Link
-                to="/chat/$threadId"
-                params={{ threadId: thread.id }}
-                className="min-w-0 flex-1 truncate text-left text-sm"
-              >
-                {thread.title}
-              </Link>
-              <button
-                type="button"
-                aria-label={`Delete ${thread.title}`}
-                onClick={() => setThreads(deleteThread(thread.id))}
-                className="rounded-md px-1.5 text-xs text-muted-foreground opacity-0 transition hover:text-destructive group-hover:opacity-100"
-              >
-                ✕
-              </button>
-            </li>
-          ))}
-        </ul>
-      </aside>
-
-      <section className="panel flex min-h-[70vh] flex-col overflow-hidden">
+    <section className="panel flex min-h-[70vh] flex-col overflow-hidden">
         <header className="flex items-center gap-3 border-b border-border px-5 py-4">
           <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-xs font-bold text-accent">
             {profile.initials}
@@ -282,6 +236,5 @@ export function ChatWindow({ threadId }: { threadId: string }) {
           </form>
         </div>
       </section>
-    </div>
   );
 }
